@@ -1,7 +1,8 @@
 import React from 'react';
+import { CssBaseline } from '@mui/material';
 
 import { Toolbar } from './components/Widgets';
-import { CssBaseline } from '@mui/material';
+import { List } from './components/Widgets/List/List';
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <CssBaseline />
       {/* TODO: Add 'header' for semantic tag and proper branding */}
       <Toolbar />
+      <List />
     </div>
   );
 }
