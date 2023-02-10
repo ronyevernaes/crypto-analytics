@@ -8,7 +8,6 @@ function App() {
     <div>
       <CssBaseline />
       {/* TODO: Add 'header' for semantic tag and proper branding */}
-
       <Toolbar />
     </div>
   );
