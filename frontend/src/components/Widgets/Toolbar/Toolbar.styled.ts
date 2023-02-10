@@ -12,3 +12,8 @@ export const StyledToolbarForm = styled.form`
   display: flex;
   gap: 24px;
 `;
+
+export const StyledEqualSign = styled.span`
+  padding-top: 28px;
+`;
+
