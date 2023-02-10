@@ -1,12 +1,11 @@
 import React, { FC } from 'react';
-
-import { Select } from '../../DataEntry';
+import { Select, TextField } from '../../DataEntry';
 import { BTCIcon, ETHIcon, XRPIcon, LTCIcon } from '../../Icons';
-import { StyledToolbarContainer } from './Toolbar.styled';
+import { StyledToolbarContainer, StyledToolbarTitle, StyledToolbarForm } from './Toolbar.styled';
 
-interface HeaderProps {};
+interface ToolbarProps {};
 
-export const Toolbar: FC<HeaderProps> = () => {
+export const Toolbar: FC<ToolbarProps> = () => {
   const fromOptions = [
     { label: 'Bitcoin', value: 'BTC', icon: <BTCIcon /> },
     { label: 'Ethereum', value: 'ETH', icon: <ETHIcon /> },
@@ -16,7 +15,13 @@ export const Toolbar: FC<HeaderProps> = () => {
 
   return (
     <StyledToolbarContainer>
-      <Select options={fromOptions} label='Currency from' />
+      <StyledToolbarTitle>Exchange</StyledToolbarTitle>
+
+      <StyledToolbarForm>
+        <Select options={fromOptions} label='Currency from' />
+        <TextField label='Amount' />
+      </StyledToolbarForm>
+
     </StyledToolbarContainer>
   );
 };

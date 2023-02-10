@@ -19,7 +19,7 @@ export const theme = createTheme({
           font-family: 'Red Hat Display';
           font-style: normal;
           font-weight: 500;
-          font-size: '14px',
+          font-size: 14px,
         }
       `,
     },

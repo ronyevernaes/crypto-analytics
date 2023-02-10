@@ -1,23 +1,21 @@
 import React, { FC, ReactNode } from 'react';
 import { MenuItem } from '@mui/material';
 
-import { StyledSelectContainer, StyledLabel, StyledSelect } from './Select.styled';
-
+import { StyledSelect } from './Select.styled';
+import { BaseField, BaseFieldProps } from '../BaseField';
 export interface SelectOption {
   label: ReactNode;
   value: string;
   icon?: ReactNode;
 }
 
-export interface SelectProps {
+export interface SelectProps extends BaseFieldProps {
   options: SelectOption[];
-  label?: string;
 };
 
 export const Select: FC<SelectProps> = ({ options, label }) => {
   return (
-    <StyledSelectContainer>
-      {label && <StyledLabel>{label}</StyledLabel>}
+    <BaseField label={label}>
       <StyledSelect>
         {options.map(({ label, value, icon }) => (
           <MenuItem value={value} key={value}>
@@ -26,6 +24,6 @@ export const Select: FC<SelectProps> = ({ options, label }) => {
           </MenuItem>
         ))}
       </StyledSelect>
-    </StyledSelectContainer>
+    </BaseField>
   );
 };
