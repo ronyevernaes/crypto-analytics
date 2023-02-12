@@ -1,9 +1,14 @@
-import React, { FC, ReactNode } from 'react';
+import React, { ChangeEvent, FC, ReactNode } from 'react';
 
 import { StyledBaseFieldContainer, StyledBaseFieldLabel } from './BaseField.styled';
 
 export interface BaseFieldProps {
   label?: string;
+  name?: string;
+  value?: string | number;
+  error?: boolean;
+  helperText?: string;
+  onChange?: (event: ChangeEvent) => void;
 }
 
 interface InnerBaseFieldProps extends BaseFieldProps {

@@ -5,10 +5,10 @@ import { BaseField, BaseFieldProps } from '../BaseField';
 
 export interface TextFieldProps extends BaseFieldProps {}
 
-export const TextField: FC<TextFieldProps> = ({ label }) => {
+export const TextField: FC<TextFieldProps> = ({ label, name, value, error, helperText, onChange }) => {
   return (
     <BaseField label={label}>
-      <StyledTextField></StyledTextField>
+      <StyledTextField name={name} value={value} error={error} helperText={helperText} onChange={onChange} />
     </BaseField>
   );
-}
+};

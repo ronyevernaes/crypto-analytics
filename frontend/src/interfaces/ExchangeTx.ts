@@ -1,6 +1,6 @@
 export enum PriceType {
   live = 'Live Price',
-  exchanged = 'Exchanged'
+  exchanged = 'Exchanged',
 }
 
 export interface ExchangeTx {
