@@ -1,25 +1,22 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, ObjectIdColumn, ObjectID } from 'typeorm';
 
 @Entity()
 export class Tx {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @ObjectIdColumn()
+  id: ObjectID;
 
   @Column()
   dateTime: Date;
 
   @Column()
-  fromCurrency: string;
+  currencyFrom: string;
 
   @Column()
   amount1: number;
 
   @Column()
-  toCurrency: string;
+  currencyTo: string;
 
   @Column()
   amount2: number;
-
-  @Column()
-  type: string;
 }

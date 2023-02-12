@@ -13,8 +13,7 @@ export class TxService {
   ) {}
 
   create(createTxDto: CreateTxDto) {
-    console.log(createTxDto);
-    return this.txRepository.insert(createTxDto);
+    return this.txRepository.save(createTxDto);
   }
 
   findAll() {

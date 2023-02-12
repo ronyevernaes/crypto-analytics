@@ -9,7 +9,6 @@ export class TxController {
 
   @Post()
   create(@Body() createTxDto: CreateTxDto) {
-    console.log(createTxDto);
     return this.txService.create(createTxDto);
   }
 
