@@ -3,7 +3,7 @@ export enum PriceType {
   exchanged = 'Exchanged',
 }
 
-export interface ExchangeTx {
+export interface Tx {
   dateTime: Date;
   currencyFrom: string;
   amount1: number;
