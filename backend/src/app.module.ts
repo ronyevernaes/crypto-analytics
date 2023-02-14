@@ -6,8 +6,9 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import configuration from './config/configuration';
-import { TxModule } from './tx/tx.module';
-import { Tx } from './tx/entities/tx.entity';
+import { RatesModule } from './rates/rates.module';
+import { Rate } from './rates/entities/rate.entity';
+import { TxxModule } from './txx/txx.module';
 
 @Module({
   imports: [
@@ -20,13 +21,14 @@ import { Tx } from './tx/entities/tx.entity';
         type: 'mongodb',
         username: configService.get('database.user') as string,
         password: configService.get('database.password') as string,
-        entities: [Tx],
+        entities: [Rate],
         synchronize: true,
       }),
       inject: [ConfigService],
     }),
     ScheduleModule.forRoot(),
-    TxModule,
+    RatesModule,
+    TxxModule,
   ],
   controllers: [AppController],
   providers: [AppService],

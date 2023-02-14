@@ -4,22 +4,22 @@ import { useQuery } from 'react-query';
 import { StyledListTitle } from './List.styled';
 import { Column, Table } from '../../Table';
 import { MainLayout } from '../../Layouts';
-import getTxs from '../../../api/Tx';
-import { Tx, PriceType } from '../../../interfaces/Tx';
+import getRates from '../../../api/Rates';
+import { Rate, PriceType } from '../../../interfaces/Rate';
 
 export const List = () => {
-  const [txs, setTxs] = useState<Tx[]>([]);
-  const { isLoading, data } = useQuery<any, any,Exclude<Tx, PriceType>[], any>('txs', getTxs);
+  const [rates, setRates] = useState<Rate[]>([]);
+  const { isLoading, data } = useQuery<any, any,Exclude<Rate, PriceType>[], any>('txs', getRates);
 
   useEffect(() => {
-    setTxs(
+    setRates(
       data 
-      ? data?.map<Tx>(d => ({ ...d, type: PriceType.exchanged }))
+      ? data?.map<Rate>(d => ({ ...d, type: PriceType.exchanged }))
       : []
     );
   }, [data]);
 
-  const columns: Column<Tx>[] = [
+  const columns: Column<Rate>[] = [
     { label: 'Date & Time', id: 'dateTime' },
     { label: 'Currency From', id: 'currencyFrom' },
     { label: 'Amount 1', id: 'amount1' },
@@ -32,7 +32,7 @@ export const List = () => {
     <MainLayout>
       <StyledListTitle>History</StyledListTitle>
 
-      <Table id="exchange-table" columns={columns} loading={isLoading} data={txs} />
+      <Table id="exchange-table" columns={columns} loading={isLoading} data={rates} />
     </MainLayout>
   );
 };

@@ -30,7 +30,7 @@ export const Toolbar: FC<ToolbarProps> = () => {
       amount2: undefined,
     },
     onSubmit: (values) => {
-      fetch('http://localhost:3000/tx', {
+      fetch('http://localhost:3000/rates', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
