@@ -4,6 +4,7 @@ import { SchedulerRegistry, Timeout } from '@nestjs/schedule';
 import { HttpService } from '@nestjs/axios';
 
 import { ExchangeAssetDto } from './dto/exchange-asset.dto';
+import { RatesGateway } from 'src/rates/rates.gateway';
 import { RatesService } from 'src/rates/rates.service';
 
 @Injectable()
@@ -26,6 +27,7 @@ export class ExchangeService {
     private readonly schedulerRegistry: SchedulerRegistry,
     private readonly ratesService: RatesService,
     private readonly httpService: HttpService,
+    private readonly ratesGateway: RatesGateway,
   ) {}
 
   @Timeout(0)
@@ -51,7 +53,7 @@ export class ExchangeService {
     assets.forEach((asset) => {
       this.httpService.axiosRef
         .get(`${this.apiUrl}/coins/${asset}/tickers`)
-        .then((response) => {
+        .then(async (response) => {
           const exchangeAsset = response.data as ExchangeAssetDto;
           const { tickers } = exchangeAsset;
 
@@ -64,7 +66,7 @@ export class ExchangeService {
               `Saving ${selectedTicker.base} at ${selectedTicker.timestamp}`,
             );
 
-            this.ratesService.create({
+            const newRate = await this.ratesService.create({
               dateTime: new Date(selectedTicker.timestamp),
               currencyFrom: selectedTicker.base,
               amount1: 1,
@@ -72,6 +74,8 @@ export class ExchangeService {
               amount2: selectedTicker.last,
               type: 'live',
             });
+
+            this.ratesGateway.handleNewRate(newRate);
           } else {
             this.logger.warn(
               `Ticker not found for asset ${exchangeAsset.name}`,

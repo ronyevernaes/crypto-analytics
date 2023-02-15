@@ -8,8 +8,7 @@ import { Rate } from './entities/rate.entity';
 @Injectable()
 export class RatesService {
   constructor(
-    @InjectRepository(Rate)
-    private rateRepository: Repository<Rate>,
+    @InjectRepository(Rate) private rateRepository: Repository<Rate>,
   ) {}
 
   create(createRateDto: CreateRateDto) {

@@ -7,7 +7,6 @@ import { AppController } from './app.controller';
 import configuration from './config/configuration';
 import { RatesModule } from './rates/rates.module';
 import { Rate } from './rates/entities/rate.entity';
-import { TxxModule } from './txx/txx.module';
 import { ExchangeModule } from './exchange/exchange.module';
 
 @Module({
@@ -29,7 +28,6 @@ import { ExchangeModule } from './exchange/exchange.module';
     ScheduleModule.forRoot(),
     RatesModule,
     ExchangeModule,
-    TxxModule,
   ],
   controllers: [AppController],
   providers: [],

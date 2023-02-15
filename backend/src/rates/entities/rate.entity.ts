@@ -3,7 +3,7 @@ import { Entity, Column, ObjectIdColumn, ObjectID } from 'typeorm';
 @Entity()
 export class Rate {
   @ObjectIdColumn()
-  id: ObjectID;
+  id?: ObjectID;
 
   @Column()
   dateTime: Date;

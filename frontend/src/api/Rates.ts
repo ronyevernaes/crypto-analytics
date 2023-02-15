@@ -1,6 +1,6 @@
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-export default function resolve () {
+export function get() {
   return fetch(`${BACKEND_URL}/rates`, {
     headers: {
       'Content-Type': 'application/json',
