@@ -19,4 +19,7 @@ export class Rate {
 
   @Column()
   amount2: number;
+
+  @Column()
+  type: string;
 }

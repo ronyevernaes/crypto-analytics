@@ -5,18 +5,15 @@ import { StyledListTitle } from './List.styled';
 import { Column, Table } from '../../Table';
 import { MainLayout } from '../../Layouts';
 import getRates from '../../../api/Rates';
-import { Rate, PriceType } from '../../../interfaces/Rate';
+import { Rate } from '../../../interfaces/Rate';
 
 export const List = () => {
   const [rates, setRates] = useState<Rate[]>([]);
-  const { isLoading, data } = useQuery<any, any,Exclude<Rate, PriceType>[], any>('txs', getRates);
+  const { isLoading, data } = useQuery<any, any, Rate[], any>('txs', getRates);
 
   useEffect(() => {
-    setRates(
-      data 
-      ? data?.map<Rate>(d => ({ ...d, type: PriceType.exchanged }))
-      : []
-    );
+    console.log(data);
+    setRates(data || []);
   }, [data]);
 
   const columns: Column<Rate>[] = [

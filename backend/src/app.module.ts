@@ -4,11 +4,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ScheduleModule } from '@nestjs/schedule';
 
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import configuration from './config/configuration';
 import { RatesModule } from './rates/rates.module';
 import { Rate } from './rates/entities/rate.entity';
 import { TxxModule } from './txx/txx.module';
+import { ExchangeModule } from './exchange/exchange.module';
 
 @Module({
   imports: [
@@ -28,10 +28,11 @@ import { TxxModule } from './txx/txx.module';
     }),
     ScheduleModule.forRoot(),
     RatesModule,
+    ExchangeModule,
     TxxModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [],
 })
 export class AppModule {
   constructor(private configService: ConfigService) {}

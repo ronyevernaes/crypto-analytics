@@ -7,6 +7,7 @@ import { Select, TextField } from '../../DataEntry';
 import { BTCIcon, ETHIcon, XRPIcon, LTCIcon } from '../../Icons';
 import { MainLayout } from '../../Layouts';
 import { StyledToolbarContainer, StyledToolbarTitle, StyledToolbarForm, StyledEqualSign } from './Toolbar.styled';
+import { PriceType } from '../../../interfaces/Rate';
 
 interface ToolbarProps {};
 
@@ -38,6 +39,7 @@ export const Toolbar: FC<ToolbarProps> = () => {
         body: JSON.stringify({
           ...values,
           dateTime: Date.now(),
+          type: 'exchanged',
         }),
       });
     },

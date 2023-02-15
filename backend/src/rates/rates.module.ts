@@ -9,5 +9,6 @@ import { Rate } from './entities/rate.entity';
   imports: [TypeOrmModule.forFeature([Rate])],
   controllers: [RatesController],
   providers: [RatesService],
+  exports: [RatesService],
 })
 export class RatesModule {}
