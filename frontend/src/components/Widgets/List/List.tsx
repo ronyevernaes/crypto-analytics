@@ -14,6 +14,7 @@ export const List = () => {
     refetchOnWindowFocus: false,
   });
 
+  // Setup WebSocket
   useEffect(() => {
     // TODO: Wrap this into a helper function
     if (process.env.REACT_APP_WS_URL === undefined) {

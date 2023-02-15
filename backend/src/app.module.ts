@@ -5,9 +5,9 @@ import { ScheduleModule } from '@nestjs/schedule';
 
 import { AppController } from './app.controller';
 import configuration from './config/configuration';
-import { RatesModule } from './rates/rates.module';
-import { Rate } from './rates/entities/rate.entity';
 import { ExchangeModule } from './exchange/exchange.module';
+import { Rate } from './rates/entities/rate.entity';
+import { RatesModule } from './rates/rates.module';
 
 @Module({
   imports: [

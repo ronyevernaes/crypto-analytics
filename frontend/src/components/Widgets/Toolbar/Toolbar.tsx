@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
+import { post as postRate } from '../../../api/Rates';
 import { Button } from '../../Buttons';
 import { Select, TextField } from '../../DataEntry';
 import { BTCIcon, ETHIcon, XRPIcon, LTCIcon } from '../../Icons';
@@ -30,16 +31,10 @@ export const Toolbar: FC<ToolbarProps> = () => {
       amount2: undefined,
     },
     onSubmit: (values) => {
-      fetch('http://localhost:3000/rates', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...values,
-          dateTime: Date.now(),
-          type: 'exchanged',
-        }),
+      postRate({
+        ...values,
+        dateTime: Date.now(),
+        type: 'exchanged',
       });
     },
     validationSchema: Yup.object({

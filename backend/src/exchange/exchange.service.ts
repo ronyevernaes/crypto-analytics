@@ -38,6 +38,8 @@ export class ExchangeService {
       clearInterval(this.schedulerRegistry.getInterval('exchange'));
     }
 
+    this.getRates();
+
     this.schedulerRegistry.addInterval(
       'exchange',
       setInterval(() => this.getRates(), this.interval * 60000),
