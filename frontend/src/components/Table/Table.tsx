@@ -7,6 +7,7 @@ export interface Column<T> {
   id: keyof T;
   label: string;
   align?: 'left' | 'center' | 'right';
+  render?: (data: ReactNode) => ReactNode;
 }
 
 interface TableProps<T> {
@@ -30,9 +31,9 @@ export const Table = <T,>({ id: tableId, data, columns, loading }: TableProps<T>
           {loading}
           {!loading && data && data.map((rowData: T, index) => (
             <StyledTableRow key={`${tableId}-row-${index}`}>
-              {columns.map(({ id }) => (
-                <StyledTableCell key={`${tableId}-row-${index}-${id as string}`} >
-                  {rowData[id] as ReactNode}
+              {columns.map(({ id, render }) => (
+                <StyledTableCell key={`${tableId}-row-${index}-${id as string}`}>
+                  {render ? render(rowData[id] as ReactNode) : rowData[id] as ReactNode}
                 </StyledTableCell>
               ))}
             </StyledTableRow>

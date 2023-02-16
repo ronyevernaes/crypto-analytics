@@ -33,7 +33,7 @@ export const Toolbar: FC<ToolbarProps> = () => {
     onSubmit: (values) => {
       postRate({
         ...values,
-        dateTime: Date.now(),
+        dateTime: new Date(),
         type: 'exchanged',
       });
     },

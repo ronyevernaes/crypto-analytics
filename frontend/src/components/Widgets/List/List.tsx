@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ReactNode } from 'react';
 import { useQuery } from 'react-query';
 import io from 'socket.io-client';
 
-import { StyledListTitle } from './List.styled';
+import { StyledListTitle, StyledRateType } from './List.styled';
 import { Column, Table } from '../../Table';
 import { MainLayout } from '../../Layouts';
 import { get as getRates } from '../../../api/Rates';
-import { Rate } from '../../../interfaces/Rate';
+import { PriceType, Rate } from '../../../interfaces/Rate';
 
 export const List = () => {
   const [rates, setRates] = useState<Rate[]>([]);
@@ -16,7 +16,7 @@ export const List = () => {
 
   // Setup WebSocket
   useEffect(() => {
-    // TODO: Wrap this into a helper function
+    // TODO: Extract to helper
     if (process.env.REACT_APP_WS_URL === undefined) {
       throw new Error('Undefined WebSocket URL');
     }
@@ -34,13 +34,45 @@ export const List = () => {
 
   useEffect(() => setRates(data || []), [data]);
 
+  // TODO: Extract to helper
+  const formatCurrency = (amount: ReactNode) =>
+    (amount as number).toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 8
+    });
+
   const columns: Column<Rate>[] = [
-    { label: 'Date & Time', id: 'dateTime' },
+    {
+      label: 'Date & Time',
+      id: 'dateTime',
+      // TODO: Extract to helper
+      render: (dateTime) => {
+        const dt = new Date(dateTime as string);
+        const date = dt.getDate().toString().padStart(2, '0');
+        const month = (dt.getMonth() + 1).toString().padStart(2, '0');
+        const year = dt.getFullYear().toString();
+        const hour = dt.getHours().toString().padStart(2, '0');
+        const mins = dt.getMinutes().toString().padStart(2, '0');
+
+        return `${date}/${month}/${year} ${hour}:${mins}`;
+      },
+    },
     { label: 'Currency From', id: 'currencyFrom' },
-    { label: 'Amount 1', id: 'amount1' },
+    { label: 'Amount 1', id: 'amount1', render: formatCurrency },
     { label: 'Currency To', id: 'currencyTo' },
-    { label: 'Amount 2', id: 'amount2' },
-    { label: 'Type', id: 'type' },
+    { label: 'Amount 2', id: 'amount2', render: formatCurrency },
+    {
+      label: 'Type',
+      id: 'type',
+      render: (type) => {
+        const priceType = type as keyof typeof PriceType;
+        return (
+          <StyledRateType type={priceType}>
+            {PriceType[priceType].toString()}
+          </StyledRateType>
+        );
+      }
+    },
   ];
 
   return ( 
