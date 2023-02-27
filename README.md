@@ -1,4 +1,4 @@
-# Exchange Analytics
+# Crypto Analytics
 
 ## Scope
 Price tickers listing with schedule task synchronization and websockets frontend
@@ -6,7 +6,7 @@ updates.
 
 ## Roadmap
 
-- [x] Read tickers data from configured API. Use case: Coingecko.
+- [x] Read tickers data from configured API. Use case: CoinGecko.
 - [x] Synchronize configured tickers data into local database.
 - [x] Show the data table.
 - [x] Paginate the data in the data table.
