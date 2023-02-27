@@ -1,9 +1,8 @@
 version: '3.1'
 
 services:
-  mongo:
-    # image: bitnami/mongodb:6.0
-    image: mongo
+  database:
+    image: mongo:5.0.15
     env_file:
       - .env
     ports:
@@ -12,15 +11,42 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${DATABASE_USER}
       MONGO_INITDB_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+    networks:
+      - exchange-analytics-network
 
-  mongo-express:
-    image: mongo-express
+  # mongo-express:
+  #   image: mongo-express
+  #   env_file:
+  #     - .env
+  #   restart: always
+  #   ports:
+  #     - 8081:8081
+  #   environment:
+  #     ME_CONFIG_MONGODB_ADMINUSERNAME: ${DATABASE_USER}
+  #     ME_CONFIG_MONGODB_ADMINPASSWORD: ${DATABASE_PASSWORD}
+  #     ME_CONFIG_MONGODB_URL: mongodb://${DATABASE_USER}:${DATABASE_PASSWORD}@database:27017/
+
+  backend:
+    container_name: exchange-analytics-backend
+    image: exchange-analytics-backend:1.0.0
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    command: npm run start:${NODE_ENV}
     env_file:
       - .env
-    restart: always
     ports:
-      - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: ${DATABASE_USER}
-      ME_CONFIG_MONGODB_ADMINPASSWORD: ${DATABASE_PASSWORD}
-      ME_CONFIG_MONGODB_URL: mongodb://${DATABASE_USER}:${DATABASE_PASSWORD}@mongo:27017/
+      - 3000:3000
+      - 9229:9229
+    networks:
+      - exchange-analytics-network
+    depends_on:
+      - database
+    volumes:
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: unless-stopped
+
+networks:
+  exchange-analytics-network:
+    driver: bridge
