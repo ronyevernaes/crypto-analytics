@@ -8,8 +8,8 @@ updates.
 
 - [x] Read tickers data from configured API. Use case: Coingecko.
 - [x] Synchronize configured tickers data into local database.
-- [ ] Show the data table.
-- [ ] Paginate the data in the data table.
+- [x] Show the data table.
+- [x] Paginate the data in the data table.
 - [ ] Filter the data by ticket.
 - [ ] Filter the data by date range.
 - [ ] Graph the tickers price.
