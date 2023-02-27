@@ -1,10 +1,37 @@
-# Widget Exchange
+# Exchange Analytics
 
-This is a technical challenge designed by the company RedAcre.
+## Scope
+Price tickers listing with schedule task synchronization and websockets frontend
+updates.
 
-Is about a widget to display several currency exchanges rates, allowing the user
-to exchange USD for Crypto. The application consists of a React front-end client
-and a Node back-end service (NestJS).
+## Roadmap
 
-The frontend is contained in the `frontend` folder and the backend is contained
-in the `backend` folder.
+- [x] Read tickers data from configured API. Use case: Coingecko.
+- [x] Synchronize configured tickers data into local database.
+- [ ] Show the data table.
+- [ ] Paginate the data in the data table.
+- [ ] Filter the data by ticket.
+- [ ] Filter the data by date range.
+- [ ] Graph the tickers price.
+
+## Architecture
+
+- A NestJS Scheduled task retrieve data from CoinGecko, with a periodicity given in an environment variable.
+- The data retrieved from CoinGecko is stored in a MongoDB database.
+- When the user visits the home, an endpoint is requested to retrieve the data from the database.
+- If there's an scheduled task execution, the data is pushed to the user using a WebSocket.
+
+```mermaid
+graph TD;
+  Frontend(<b>Frontend</b>: ReactJS + Styled Components + MUI);
+  Backend(<b>Backend</b>: NestJS + TypeORM);
+  DB(<b>DB</b>: MongoDB);
+  API(<b>API</b>: CoinGecko);
+  Frontend --> Backend;
+  Backend --> DB;
+  Backend --> API;
+  Backend --> Frontend;
+```
+
+## Configuration
+TBD.
