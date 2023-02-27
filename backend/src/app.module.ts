@@ -22,6 +22,7 @@ import { RatesModule } from './rates/rates.module';
         password: configService.get('database.password') as string,
         entities: [Rate],
         synchronize: true,
+        host: configService.get('database.host') as string,
       }),
       inject: [ConfigService],
     }),
