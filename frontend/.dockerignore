@@ -1,0 +1,6 @@
+node_modules
+npm-debug.log
+docker-volumes
+build
+e2e
+test

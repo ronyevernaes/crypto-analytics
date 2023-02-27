@@ -47,6 +47,26 @@ services:
       - /usr/src/app/node_modules
     restart: unless-stopped
 
+  frontend:
+    container_name: exchange-analytics-frontend
+    image: exchange-analytics-frontend:1.0.0
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    # command: npm run start:${NODE_ENV}
+    env_file:
+      - .env
+    ports:
+      - 3001:3000
+    networks:
+      - exchange-analytics-network
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: unless-stopped
+
 networks:
   exchange-analytics-network:
     driver: bridge
