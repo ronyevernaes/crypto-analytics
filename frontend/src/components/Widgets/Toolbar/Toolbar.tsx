@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 import { post as postRate } from '../../../api/Rates';
 import { Button } from '../../Buttons';
 import { Select, TextField } from '../../DataEntry';
-import { BTCIcon, ETHIcon, XRPIcon, LTCIcon } from '../../Icons';
 import { MainLayout } from '../../Layouts';
 import { StyledToolbarContainer, StyledToolbarTitle, StyledToolbarForm, StyledEqualSign } from './Toolbar.styled';
 
@@ -13,10 +12,10 @@ interface ToolbarProps {};
 
 export const Toolbar: FC<ToolbarProps> = () => {
   const fromOptions = [
-    { label: 'Bitcoin', value: 'BTC', icon: <BTCIcon /> },
-    { label: 'Ethereum', value: 'ETH', icon: <ETHIcon /> },
-    { label: 'Ripple', value: 'XRP', icon: <XRPIcon /> },
-    { label: 'Litcoin', value: 'LTC', icon: <LTCIcon /> },
+    { label: 'Bitcoin', value: 'BTC' },
+    { label: 'Ethereum', value: 'ETH' },
+    { label: 'Ripple', value: 'XRP' },
+    { label: 'Litcoin', value: 'LTC' },
   ];
 
   const toOptions = [
