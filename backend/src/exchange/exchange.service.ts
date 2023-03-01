@@ -46,6 +46,44 @@ export class ExchangeService {
     );
   }
 
+  private async saveExchangeAsset(
+    asset: string,
+    currencies: string[],
+  ): Promise<void> {
+    try {
+      const response = await this.httpService.axiosRef.get(
+        `${this.apiUrl}/coins/${asset}/tickers`,
+      );
+      const exchangeAsset = response.data as ExchangeAssetDto;
+      const { tickers } = exchangeAsset;
+
+      const selectedTicker = tickers.find((ticker) =>
+        currencies.includes(ticker.target),
+      );
+
+      if (selectedTicker) {
+        this.logger.debug(
+          `Saving ${selectedTicker.base} at ${selectedTicker.timestamp}`,
+        );
+
+        const newRate = await this.ratesService.create({
+          dateTime: new Date(selectedTicker.timestamp),
+          currencyFrom: selectedTicker.base,
+          amount1: 1,
+          currencyTo: selectedTicker.target,
+          amount2: selectedTicker.last,
+          type: 'live',
+        });
+
+        this.ratesGateway.handleNewRate(newRate);
+      } else {
+        this.logger.warn(`Ticker not found for asset ${exchangeAsset.name}`);
+      }
+    } catch (error) {
+      this.logger.error(error);
+    }
+  }
+
   getRates(): void {
     this.logger.debug(`Requesting to CoinGecko: ${this.assets}`);
 
@@ -53,40 +91,7 @@ export class ExchangeService {
     const currencies = this.currencies.split(',');
 
     assets.forEach((asset) => {
-      this.httpService.axiosRef
-        .get(`${this.apiUrl}/coins/${asset}/tickers`)
-        .then(async (response) => {
-          const exchangeAsset = response.data as ExchangeAssetDto;
-          const { tickers } = exchangeAsset;
-
-          const selectedTicker = tickers.find((ticker) =>
-            currencies.includes(ticker.target),
-          );
-
-          if (selectedTicker) {
-            this.logger.debug(
-              `Saving ${selectedTicker.base} at ${selectedTicker.timestamp}`,
-            );
-
-            const newRate = await this.ratesService.create({
-              dateTime: new Date(selectedTicker.timestamp),
-              currencyFrom: selectedTicker.base,
-              amount1: 1,
-              currencyTo: selectedTicker.target,
-              amount2: selectedTicker.last,
-              type: 'live',
-            });
-
-            this.ratesGateway.handleNewRate(newRate);
-          } else {
-            this.logger.warn(
-              `Ticker not found for asset ${exchangeAsset.name}`,
-            );
-          }
-        })
-        .catch((error) => {
-          this.logger.error(error);
-        });
+      this.saveExchangeAsset(asset, currencies);
     });
   }
 }
