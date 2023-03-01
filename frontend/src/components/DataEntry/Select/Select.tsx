@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FC, ReactNode } from 'react';
 import { MenuItem, FormHelperText, SelectChangeEvent } from '@mui/material';
 
-import { StyledSelect } from './Select.styled';
+import { StyledSelect, StyledSelectOptionIconWrapper, StyledSelectOptionLabel } from './Select.styled';
 import { BaseField, BaseFieldProps } from '../BaseField';
 export interface SelectOption {
   label: ReactNode;
@@ -23,8 +23,12 @@ export const Select: FC<SelectProps> = ({ options, label, name, value, error, he
       <StyledSelect name={name} error={error} value={value} onChange={localOnChange}>
         {options.map(({ label, value, icon }) => (
           <MenuItem value={value} key={value}>
-            {icon ? icon : ''}
-            {label}
+            {icon &&
+              <StyledSelectOptionIconWrapper>
+                {icon}
+              </StyledSelectOptionIconWrapper>
+            }
+            <StyledSelectOptionLabel>{label}</StyledSelectOptionLabel>
           </MenuItem>
         ))}
       </StyledSelect>

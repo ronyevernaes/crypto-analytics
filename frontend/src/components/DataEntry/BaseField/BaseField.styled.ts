@@ -2,7 +2,8 @@ import styled, { css } from 'styled-components';
 
 export const StyledAbstractBaseField = css`
   .MuiOutlinedInput-root {
-    width: 200px;
+    min-width: 100px;
+    max-width: 200px;
     height: 42px;
     border-radius: 8px !important;
   }
@@ -11,7 +12,7 @@ export const StyledAbstractBaseField = css`
 export const StyledBaseFieldContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 200px;
+  max-width: 200px;
   height: 42px;
 `;
 

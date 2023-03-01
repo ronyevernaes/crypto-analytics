@@ -9,4 +9,16 @@ export const StyledSelect = styled(Select)`
   border-radius: 8px !important;
 
   flex-grow: 0;
+  display: flex;
+  align-content: center;
+`;
+
+export const StyledSelectOptionIconWrapper = styled.div`
+  display: inline-block;
+  margin-top: 2px;
+  margin-right: 8px;
+`;
+
+export const StyledSelectOptionLabel = styled.div`
+  display: inline-block;
 `;
