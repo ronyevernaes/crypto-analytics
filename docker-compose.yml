@@ -12,7 +12,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${DATABASE_USER}
       MONGO_INITDB_ROOT_PASSWORD: ${DATABASE_PASSWORD}
     networks:
-      - exchange-analytics-network
+      - crypto-analytics-network
 
   # mongo-express:
   #   image: mongo-express
@@ -27,8 +27,8 @@ services:
   #     ME_CONFIG_MONGODB_URL: mongodb://${DATABASE_USER}:${DATABASE_PASSWORD}@database:27017/
 
   backend:
-    container_name: exchange-analytics-backend
-    image: exchange-analytics-backend:1.0.0
+    container_name: crypto-analytics-backend
+    image: crypto-analytics-backend:1.0.0
     build:
       context: ./backend
       dockerfile: ./Dockerfile
@@ -39,7 +39,7 @@ services:
       - 3000:3000
       - 9229:9229
     networks:
-      - exchange-analytics-network
+      - crypto-analytics-network
     depends_on:
       - database
     volumes:
@@ -48,18 +48,20 @@ services:
     restart: unless-stopped
 
   frontend:
-    container_name: exchange-analytics-frontend
-    image: exchange-analytics-frontend:1.0.0
+    container_name: crypto-analytics-frontend
+    image: crypto-analytics-frontend:1.0.0
     build:
       context: ./frontend
       dockerfile: ./Dockerfile
     # command: npm run start:${NODE_ENV}
     env_file:
       - .env
+    environment:
+      - CHOKIDAR_USEPOLLING=true
     ports:
       - 3001:3000
     networks:
-      - exchange-analytics-network
+      - crypto-analytics-network
     depends_on:
       - backend
     volumes:
@@ -68,5 +70,5 @@ services:
     restart: unless-stopped
 
 networks:
-  exchange-analytics-network:
+  crypto-analytics-network:
     driver: bridge
