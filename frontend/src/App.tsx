@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { CssBaseline } from '@mui/material';
 
 import { List } from './components/Widgets/List/List';
+import { Header } from './components/Widgets/Header';
 
 function App() {
   const queryClient = new QueryClient();
@@ -10,7 +11,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <CssBaseline />
-      {/* TODO: Add 'header' for semantic tag and proper branding */}
+      <Header title='Exchange Analyticszzz' />
       <List />
     </QueryClientProvider>
   );
